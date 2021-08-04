@@ -18,10 +18,20 @@ def init_user_table():
     conn = sqlite3.connect('my_database.db')
     print("Opened database successfully")
 
+    conn.execute("CREATE TABLE IF NOT EXISTS user(user_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                 "first_name TEXT NOT NULL,"
+                 "last_name TEXT NOT NULL,"
+                 "username TEXT NOT NULL,"
+                 "password TEXT NOT NULL,"
+                 "email TEXT NOT NULL)")
+    print("user table created successfully")
+
+
     conn.close()
 
 
 def fetch_users():
+
     with sqlite3.connect('my_database.db') as conn:
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM user")
@@ -90,7 +100,7 @@ def user_registration():
         password = request.form['password']
         email = request.form['email']
 
-        with sqlite3.connect("blog.db") as conn:
+        with sqlite3.connect("my_database.db") as conn:
             cursor = conn.cursor()
             cursor.execute("INSERT INTO user("
                            "first_name,"
